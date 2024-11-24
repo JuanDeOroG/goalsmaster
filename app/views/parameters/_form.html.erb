@@ -1,0 +1,12 @@
+<%= form_with(model: @parameter) do |form| %>
+  <%= form.label :id, "Identificador" %>
+
+  <%= form.text_field :id %>
+  
+  <%= form.label :name, "Name" %>
+
+  <%= form.text_field :name %>
+
+  <%= form.submit enviar %>
+
+<% end %>
