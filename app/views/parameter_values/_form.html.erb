@@ -1,0 +1,16 @@
+<%= form_with(model: @parameter) do |form| %>
+  <%= form.label :id, "Identificador" %>
+
+  <%= form.text_field :id %>
+  
+  <%= form.label :name, "Name" %>
+
+  <%= form.text_field :name %>
+
+  <%= form.label :parameter_id, "Parámetro" %>
+  <%= form.collection_select :parameter_id, @parameters, :id, :name, prompt: "Seleccione un parámetro" %>
+
+
+  <%= form.submit enviar %>
+
+<% end %>
