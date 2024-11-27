@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_15_223753) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_034608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "parameter_values", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "state", null: false
+    t.integer "parameter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_parameter_values_on_name", unique: true
+  end
 
   create_table "parameters", force: :cascade do |t|
     t.string "name", null: false
@@ -21,4 +30,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_223753) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_parameters_on_name", unique: true
   end
+
+  add_foreign_key "parameter_values", "parameters", on_delete: :cascade
 end

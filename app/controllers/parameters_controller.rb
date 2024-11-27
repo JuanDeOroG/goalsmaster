@@ -1,10 +1,16 @@
+require_dependency "Parameters/ListParametersUseCase"
+
 class ParametersController < ApplicationController
+  def initialize
+    @list_parameters_use_case = ListParametersUseCase.new
+    super()  # Llamamos al inicializador de ApplicationController
+  end
   def index
+    @parameters = @list_parameters_use_case.call(params, true)
   end
 
   def new
     @parameter = Parameter.new
-    @enviar = "Create"
   end
 
   def create

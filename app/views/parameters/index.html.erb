@@ -1,1 +1,7 @@
-<h1>Jelou</h1>
+<h1>Parametros</h1>
+
+<% @parameters.each do |value| %>
+    <li> <%= "#{value.name}"%></li>
+<% end %>
+
+<%= paginate @parameters %>
