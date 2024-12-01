@@ -1,12 +1,15 @@
 require_dependency "Parameters/ListParametersUseCase"
+require_dependency "Parameter_Values/ListParameterValuesUseCase"
 
 class ParameterValuesController < ApplicationController
   def initialize
     @list_parameters_use_case = ListParametersUseCase.new
+    @list_parameter_values_use_case = ListParameterValuesUseCase.new
+
     super()  # Llamamos al inicializador de ApplicationController
   end
   def index
-    @parameter_values = ParameterValue.page(params[:page]).per(10)
+    @parameter_values = @list_parameter_values_use_case.call(params, true)
   end
 
   def new
@@ -15,13 +18,16 @@ class ParameterValuesController < ApplicationController
   end
 
   def create
-    @parameter_value = parameter_values_params
+    @parameter_value = ParameterValue.new(parameter_values_params) # Instanciar un objeto y filtrar la informacion del request
     @parameter_value.state = 1
 
     if @parameter_value.save
-      redirect_to @parameter_value, notice: "Valor Parametro Creado Correctamente."
+      flash[:alert] = "Valor parametro #{parameter_value.name} creado correctamente."
+
+      redirect_to @parameter_value
     else
-      render :new, status: :unprocessable_entity
+      flash[:alert] = @parameter_value.errors.full_messages.to_sentence
+      redirect_to new_parameter_value_path(parameter_value: parameter_values_params)
 
     end
   end

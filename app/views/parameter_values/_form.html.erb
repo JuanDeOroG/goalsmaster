@@ -1,4 +1,13 @@
-<%= form_with(model: @parameter) do |form| %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% elsif flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<%= form_with(model: @parameter_value) do |form| %>
   <%= form.label :id, "Identificador" %>
 
   <%= form.text_field :id %>
