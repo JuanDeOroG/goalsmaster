@@ -22,7 +22,7 @@ class ParameterValuesController < ApplicationController
     @parameter_value.state = 1
 
     if @parameter_value.save
-      flash[:alert] = "Valor parametro #{parameter_value.name} creado correctamente."
+      flash[:alert] = "Valor parametro #{@parameter_value.name} creado correctamente."
 
       redirect_to @parameter_value
     else
