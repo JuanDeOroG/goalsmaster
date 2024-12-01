@@ -13,7 +13,7 @@ class ParameterValuesController < ApplicationController
   end
 
   def new
-    @parameter_value = ParameterValue.new
+    @parameter_value = ParameterValue.new # Para asignar el modelo al formulario
     @parameters = @list_parameters_use_case.call(params, false)
   end
 
@@ -30,6 +30,22 @@ class ParameterValuesController < ApplicationController
       redirect_to new_parameter_value_path(parameter_value: parameter_values_params)
 
     end
+  end
+
+  def edit
+    @parameter_value = ParameterValue.find(params[:id])
+    @parameters = @list_parameters_use_case.call(params, false)
+  end
+  def update
+    @parameter_value = ParameterValue.find(params[:id])
+    if @parameter_value.update(parameter_values_params)
+      flash[:alert] = "Valor parametro #{@parameter_value.name} actualizado correctamente."
+
+    else
+      flash[:alert] = @parameter_value.errors.full_messages.to_sentence
+
+    end
+    redirect_to(edit_parameter_value_path)
   end
 
   def parameter_values_params
