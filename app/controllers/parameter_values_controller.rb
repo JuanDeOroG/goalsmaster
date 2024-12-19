@@ -22,13 +22,9 @@ class ParameterValuesController < ApplicationController
     @parameter_value.state = 1
 
     if @parameter_value.save
-      flash[:alert] = "Valor parametro #{@parameter_value.name} creado correctamente."
-
-      redirect_to @parameter_value
+      redirect_to parameter_values_path, notice: "Valor parámetro #{@parameter_value.name} creado correctamente."
     else
-      flash[:alert] = @parameter_value.errors.full_messages.to_sentence
-      redirect_to new_parameter_value_path(parameter_value: parameter_values_params)
-
+      redirect_to new_parameter_value_path(parameter_value: parameter_values_params), alert: @parameter_value.errors.full_messages.to_sentence
     end
   end
 
@@ -39,13 +35,10 @@ class ParameterValuesController < ApplicationController
   def update
     @parameter_value = ParameterValue.find(params[:id])
     if @parameter_value.update(parameter_values_params)
-      flash[:alert] = "Valor parametro #{@parameter_value.name} actualizado correctamente."
-
+      redirect_to edit_parameter_value_path, alert: "Valor parametro #{@parameter_value.name} actualizado correctamente."
     else
-      flash[:alert] = @parameter_value.errors.full_messages.to_sentence
-
+      redirect_to edit_parameter_value_path, alert: @parameter_value.errors.full_messages.to_sentence
     end
-    redirect_to(edit_parameter_value_path)
   end
 
   def parameter_values_params
