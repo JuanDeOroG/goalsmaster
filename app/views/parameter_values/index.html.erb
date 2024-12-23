@@ -1,6 +1,9 @@
 <h1>Valores Parametros</h1>
+    <%= link_to 'Crear', new_parameter_value_path() %>
+
 <ul>
     <% @parameter_values.each do |value| %>
     <li> <%= "#{value.name}"%></li>
+    <%= link_to 'Editar', edit_parameter_value_path(value) %>
     <% end %>
 </ul>

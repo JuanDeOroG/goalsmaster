@@ -21,6 +21,9 @@ gem "jbuilder"
 gem "kaminari" # Para la paginación
 gem "byebug" # equivalente a dd()
 
+gem "pagy", "~> 9.3"
+
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

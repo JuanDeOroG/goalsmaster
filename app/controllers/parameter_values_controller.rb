@@ -29,11 +29,15 @@ class ParameterValuesController < ApplicationController
   end
 
   def edit
-    @parameter_value = ParameterValue.find(params[:id])
-    @parameters = @list_parameters_use_case.call(params, false)
+    @parameter_value = ParameterValue.find(params[:id]) # se manda el id del parametro mediante la url/request/params
+    @parameters = @list_parameters_use_case.call(params, false) # Listado de parametros para select de parametros
   end
   def update
     @parameter_value = ParameterValue.find(params[:id])
+    # Rails.logger.debug "Parámetros permitidos: #{parameter_values_params.inspect}"
+    # Rails.logger.debug "Parámetros permitidos sin inspect: #{parameter_values_params}"
+    # byebug
+
     if @parameter_value.update(parameter_values_params)
       redirect_to edit_parameter_value_path, alert: "Valor parametro #{@parameter_value.name} actualizado correctamente."
     else
