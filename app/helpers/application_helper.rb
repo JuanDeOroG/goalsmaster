@@ -1,3 +1,3 @@
 module ApplicationHelper
-  include Pagy: Frontend # para usar paginacion en las vistas (cualquier vista)
+  include Pagy::Frontend # para usar paginacion en las vistas (cualquier vista)
 end
