@@ -23,6 +23,7 @@ gem "byebug" # equivalente a dd()
 
 gem "pagy", "~> 9.3"
 
+gem "devise"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

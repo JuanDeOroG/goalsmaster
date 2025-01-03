@@ -1,6 +1,10 @@
 require_dependency "Parameters/ListParametersUseCase"
 
 class ParametersController < ApplicationController
+  # Para que valide que el usuario esté autenticado antes de accedes a las funcionalidades
+
+  before_action :authenticate_user!
+
   def initialize
     @list_parameters_use_case = ListParametersUseCase.new
     super()  # Llamamos al inicializador de ApplicationController
