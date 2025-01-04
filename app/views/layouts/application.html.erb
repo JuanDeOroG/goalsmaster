@@ -15,6 +15,11 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= stylesheet_link_tag 'argon-dashboard.css', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'argon-dashboard.js', 'data-turbo-track': 'reload', defer: true %>
+
+ 
   </head>
 
   <body>
