@@ -3,7 +3,7 @@
 class DeviseCreateUsers < ActiveRecord::Migration[7.2]
   def change
     create_table :users do |t|
-      t.string :code, null: false
+      t.string :code, null: false, default: -> { "gen_random_uuid()" }
       t.string :username, null: false, default: ""
       ## Database authenticatable
       t.string :email,              null: false, default: ""

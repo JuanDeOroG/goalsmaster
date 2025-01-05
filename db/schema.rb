@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_040914) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "code", null: false
+    t.string "code", default: -> { "gen_random_uuid()" }, null: false
     t.string "username", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
