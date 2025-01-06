@@ -25,7 +25,7 @@ gem "pagy", "~> 9.3"
 
 gem "devise"
 
-gem 'bootstrap', '~> 5.0.0'
+gem 'bootstrap', '~> 5.3.3'
  
 # Para usar variables de entorno
 gem 'dotenv-rails', groups: [:development, :test] 
