@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Goalsmaster" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
+
+<head>
+  <title>
+    <%= content_for(:title) || "Goalsmaster" %>
+  </title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
+      <%= yield :head %>
 
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+        <link rel="manifest" href="/manifest.json">
+        <link rel="icon" href="/icon.png" type="image/png">
+        <link rel="icon" href="/icon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/icon.png">
+        <!--     Fonts and icons     -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <!-- Nucleo Icons -->
+        <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <!--<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> -->
+        <!-- CSS Files -->
+        <%= stylesheet_link_tag "application" , data: { turbo_track: "reload" } %>
+          <%= javascript_importmap_tags %>
+            
 
-  <body>
-    <%= yield %>
-  </body>
+
+
+</head>
+
+<body>
+  <%= render 'shared/flash' %>
+
+      <div class="min-height-300 bg-dark position-absolute w-100"></div>
+      <!-- SideBar -->
+      <%= render "shared/sidebar" %>
+      <main class="main-content position-relative border-radius-lg ps">
+        <!-- Navbar -->
+        <%= render "shared/navbar" %>
+        <%= yield %>
+      </main>
+</body>
+
 </html>
+
+
+  
