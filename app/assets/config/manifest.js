@@ -6,5 +6,3 @@
 //
 //= link argon-dashboard.css
 //= link argon-dashboard.js
-//= link_directory ../fonts .ttf .woff .woff2 .eot .svg
-//= link_directory ../images .
