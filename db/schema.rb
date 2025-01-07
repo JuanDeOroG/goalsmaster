@@ -58,5 +58,4 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_040914) do
   end
 
   add_foreign_key "parameter_values", "parameters", on_delete: :cascade
-  add_foreign_key "users", "parameter_values", column: "state"
 end

@@ -43,6 +43,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.2]
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
-		add_foreign_key :users, :parameter_values, column: :state #Relacion a los valores parametros de los estados de un usuario
+		# add_foreign_key :users, :parameter_values, column: :state #Relacion a los valores parametros de los estados de un usuario
   end
 end

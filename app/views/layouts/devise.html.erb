@@ -25,27 +25,39 @@
         <!--<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> -->
         <!-- CSS Files -->
         <%= stylesheet_link_tag "application" , data: { turbo_track: "reload" } %>
-          <%= javascript_importmap_tags %>
-          <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+        <%= stylesheet_link_tag "argon-dashboard" , data: { turbo_track: "reload" } %>
 
+        <%= javascript_importmap_tags %>
 
+          <style>
+            .card{
+              padding: 5%;
+            }
+            .actions .btn{
+              font-size: 16px;
+            }
+            
+            .actions .btn{
+              margin-top: 5%;
+            }
+          </style>
 
 </head>
 
 <body>
   <%= render 'shared/flash' %>
 
-      <div class="min-height-300 bg-dark position-absolute w-100"></div>
-      <!-- SideBar -->
-      <%= render "shared/sidebar" %>
-      <main class="main-content position-relative border-radius-lg ps">
-        <!-- Navbar -->
-        <%= render "shared/navbar" %>
+    <div class="min-height-300 bg-dark position-absolute w-100"></div>
+    <!-- SideBar -->
+    <main
+      class="main-content position-relative border-radius-lg ps d-flex justify-content-center align-items-center vh-100">
+      <!-- Navbar -->
+      <div class="card d-flex justify-content-center align-items-center">
         <%= yield %>
-      </main>
+
+      </div>
+
+    </main>
 </body>
 
 </html>
-
-
-  
