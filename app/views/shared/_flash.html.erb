@@ -1,12 +1,12 @@
 <% content_for "head" do %>
     <style>
-        .alert-text{color:white}
+        /* div .alert-text{color:white} */
     </style>
 <% end %>
 
 <% if alert.present? %>
-<div class="alert alert-info alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x m-3" role="alert">
-    <span class="alert-text"> <%= alert %></span>
+<div class="alert alert-warning alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x m-3" role="alert">
+    <span class="alert-text" style="color: white;"><%= alert %></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -14,8 +14,8 @@
 <% end %>
 
 <% if notice.present? %>
-<div class="alert alert-warning alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x m-3" role="alert">
-    <span class="alert-text"> <%= notice %></span>
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x m-3" role="alert">
+    <span class="alert-text" style="color: white;"><%= notice %></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

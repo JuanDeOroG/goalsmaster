@@ -1,3 +1,10 @@
+<%= content_for "head" do %>
+    <style>
+        button span{
+            margin-top: 5%;
+        }
+    </style>
+<% end %>
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
     data-scroll="false">
     <div class="container-fluid py-1 px-3">
@@ -17,11 +24,12 @@
             </div>
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
-                        <%= link_to destroy_user_session_path, method: :delete,
-                        class: "nav-link text-white font-weight-bold px-0" , data: { turbo_method: :delete } do %>
+                    <%= button_to destroy_user_session_path, method: :delete,
+                        class: "btn btn-link nav-link text-white font-weight-bold px-0" do %>
                         <i class="fa fa-user me-sm-1"></i>
-                        <span class="d-sm-inline d-none">Cerrar sesión</span>
+                        <span class="d-sm-inline d-none">Sign out</span>
                         <% end %>
+
                 </li>
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">

@@ -10,7 +10,6 @@
   <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-      <%= yield :head %>
 
         <link rel="manifest" href="/manifest.json">
         <link rel="icon" href="/icon.png" type="image/png">
@@ -27,14 +26,12 @@
         <%= stylesheet_link_tag "application" , data: { turbo_track: "reload" } %>
           <%= javascript_importmap_tags %>
           <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
-
-
+          <%= yield :head %>
 
 </head>
 
 <body>
   <%= render 'shared/flash' %>
-
       <div class="min-height-300 bg-dark position-absolute w-100"></div>
       <!-- SideBar -->
       <%= render "shared/sidebar" %>
