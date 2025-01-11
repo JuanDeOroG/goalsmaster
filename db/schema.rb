@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_11_033653) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,12 +31,31 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_033653) do
     t.index ["name"], name: "index_parameters_on_name", unique: true
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "state", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_permissions_on_name", unique: true
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "roles_permissions", force: :cascade do |t|
+    t.bigint "role_id", null: false
+    t.bigint "permission_id", null: false
+    t.integer "state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_roles_permissions_on_permission_id"
+    t.index ["role_id", "permission_id"], name: "index_roles_permissions_on_role_id_and_permission_id", unique: true
+    t.index ["role_id"], name: "index_roles_permissions_on_role_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,4 +85,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_033653) do
   end
 
   add_foreign_key "parameter_values", "parameters", on_delete: :cascade
+  add_foreign_key "roles_permissions", "permissions"
+  add_foreign_key "roles_permissions", "roles"
 end
