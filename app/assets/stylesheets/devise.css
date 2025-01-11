@@ -1,0 +1,16 @@
+.card{
+    padding: 5% 7%;
+  }
+  .actions .btn{
+    font-size: 16px;
+  }
+  
+  .actions .btn{
+    margin-top: 5%;
+  }
+  .field label{
+    color: #344767;
+  }
+  form .field input{
+    border-radius: 4px;
+  }
