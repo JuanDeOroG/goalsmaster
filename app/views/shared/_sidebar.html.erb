@@ -1,3 +1,13 @@
+<% content_for "head" do %>
+    <style>
+        .modal{ z-index: 999999;}
+        .modal-backdrop {
+            z-index: 999998;
+        }
+
+    </style>
+<% end %>
+
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
     id="sidenav-main">
     <div class="sidenav-header">
@@ -25,14 +35,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="../pages/tables.html">
-                <%= link_to parameters_path, class: "nav-link" do %>
+                    <%= link_to parameters_path, class: "nav-link" do %>
 
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Tables</span>
-                <% end %>
+                        <% end %>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="../pages/billing.html">
@@ -90,6 +100,18 @@
                     </div>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Settings</h6>
+            </li>
+            <li class="nav-item">
+                <%= link_to roles_path, class: "nav-link" do %>
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-badge text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Roles</span>
+                <% end %>
             </li>
         </ul>
     </div>
