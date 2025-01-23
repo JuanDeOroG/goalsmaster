@@ -1,0 +1,106 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h6>Permissions</h6>
+          <!-- Button to open the creation modal-->
+          <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreate">
+            Create Permission
+          </button>
+        </div>
+        <div class="container">
+          <% if @permissions.present? %>
+            <div class="row">
+              <% @permissions.each do |permission| %>
+                <div class="col-md-4">
+                  <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                      <h5 class="card-title text-center">
+                        <%= permission.name %>
+                      </h5>
+                      <div class="d-flex justify-content-between">
+                        <!-- Button to edit -->
+                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                          data-bs-target="#modalEdit" data-role="<%= permission.to_json %>">
+                          Edit
+                        </button>
+                        <!-- Button to delete -->
+                        <%= button_tag "Delete" , type: "button" , class: "btn btn-sm btn-danger" , data: {
+                          bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
+
+                          <!-- Modal to delete -->
+                          <%= render "permissions/partials/confirmDeleteModal" , permission: permission %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %>
+
+                  <%= paginate @permissions, class: "pagination pagination-primary" %>
+
+            </div>
+            <% else %>
+              <div class="alert alert-info m-3">
+                <p class="mb-0" style="color: white;">No se encontraron Parámetros.</p>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to create -->
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCreateLabel">Create Permision</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'permissions/partials/form' , permission: @permission   %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to edit -->
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditLabel">Edit Permision</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido cargado dinámicamente con fetch -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function chargeEditForm() {
+    const editModal = document.getElementById("modalEdit");
+
+    editModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      const roleData = JSON.parse(button.getAttribute("data-role"));
+
+      fetch(`/roles/${roleData.id}/edit`)
+        .then(response => response.text())
+        .then(html => {
+          const modalBody = editModal.querySelector(".modal-body");
+          modalBody.innerHTML = html;
+        });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    chargeEditForm();
+  });
+
+</script>

@@ -1,0 +1,15 @@
+<% content_for "head" do %>
+<style>
+    .card {
+    border-radius: 10px; /* Bordes redondeados */
+  }
+</style>
+<% end %>
+
+<%= form_with(model: permission, url: permission.new_record? ? permissions_path : permissions_path(permission), method: permission.new_record? ? :post : :patch, local: true) do |f| %>
+    <%= f.label :name, "Permission Name", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Write here", required: true %>
+  <div class="text-center">
+    <%= f.submit permission.new_record? ? "Create" : "Update", class: "btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0" %>
+  </div>
+<% end %>
