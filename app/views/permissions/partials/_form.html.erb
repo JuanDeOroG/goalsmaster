@@ -6,7 +6,7 @@
 </style>
 <% end %>
 
-<%= form_with(model: permission, url: permission.new_record? ? permissions_path : permissions_path(permission), method: permission.new_record? ? :post : :patch, local: true) do |f| %>
+<%= form_with(model: permission, local: true) do |f| %>
     <%= f.label :name, "Permission Name", class: "form-label" %>
     <%= f.text_field :name, class: "form-control", placeholder: "Write here", required: true %>
   <div class="text-center">

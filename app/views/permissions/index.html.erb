@@ -22,7 +22,7 @@
                       <div class="d-flex justify-content-between">
                         <!-- Button to edit -->
                         <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                          data-bs-target="#modalEdit" data-role="<%= permission.to_json %>">
+                          data-bs-target="#modalEdit" data-permission="<%= permission.to_json %>">
                           Edit
                         </button>
                         <!-- Button to delete -->
@@ -88,9 +88,9 @@
 
     editModal.addEventListener("show.bs.modal", function (event) {
       const button = event.relatedTarget;
-      const roleData = JSON.parse(button.getAttribute("data-role"));
+      const data = JSON.parse(button.getAttribute("data-permission"));
 
-      fetch(`/roles/${roleData.id}/edit`)
+      fetch(`/permissions/${data.id}/edit`)
         .then(response => response.text())
         .then(html => {
           const modalBody = editModal.querySelector(".modal-body");
