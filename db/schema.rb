@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_25_193051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "goals", force: :cascade do |t|
+    t.string "code", default: -> { "gen_random_uuid()" }, null: false
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "limit_time", precision: nil
+    t.integer "user_id", null: false
+    t.integer "created_by", null: false
+    t.integer "updated_by", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "state", default: 1, null: false
+  end
 
   create_table "parameter_values", force: :cascade do |t|
     t.string "name", null: false
@@ -85,6 +98,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "goals", "users"
+  add_foreign_key "goals", "users", column: "created_by"
+  add_foreign_key "goals", "users", column: "updated_by"
   add_foreign_key "parameter_values", "parameters", on_delete: :cascade
   add_foreign_key "roles_permissions", "permissions"
   add_foreign_key "roles_permissions", "roles"

@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.2]
       t.string :username, null: false, default: ""
       ## Database authenticatable
       t.string :email,              null: false, default: ""
-      t.integer :role_id, null: false, default: 0 # User Role ID
+      t.integer :role_id, null: false # User Role ID
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -44,6 +44,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.2]
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
-		# add_foreign_key :users, :parameter_values, column: :state #Relacion a los valores parametros de los estados de un usuario
+    add_foreign_key :users, :roles, column: :role_id
   end
 end
