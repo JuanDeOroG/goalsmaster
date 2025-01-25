@@ -1,16 +1,23 @@
 require_dependency "Roles/ListRolesUseCase"
+require_dependency "Roles/UpdateRolePermissionsUseCase"
+require_dependency "Permissions/ListPermissionsUseCase"
 
 class RolesController < ApplicationController
   before_action :authenticate_user!
 
   def initialize
     @listRolesUseCase = ListRolesUseCase.new
+    @listPermissionsUseCase = ListPermissionsUseCase.new
+    @updateRolePermissionsUseCase = UpdateRolePermissionsUseCase.new
+
     super()
   end
 
   def index
-    @roles = @listRolesUseCase.call(params, true)
-    @role = Role.new # Para el formulario de creación
+    @roles = @listRolesUseCase.call(params, pagination = true)
+    @role = Role.new # To use in the modal creation
+
+    @permissionList = @listPermissionsUseCase.call(params, pagination = false)
   end
 
   def create
@@ -38,6 +45,13 @@ class RolesController < ApplicationController
     end
   end
 
+  def updateRolePermissions
+    if @updateRolePermissionsUseCase.call(role_permissions_params)
+      redirect_to roles_path, notice: "Permissions was assigned to the Role successfully"
+    else
+      redirect_to roles_path, alert: "Permissions was not assigned to the Role"
+    end
+  end
   def destroy
     role = Role.find(params[:id])
     if role.update(state: 2)
@@ -52,5 +66,9 @@ class RolesController < ApplicationController
 
   def role_params
     params.require(:role).permit(:name)
+  end
+
+  def role_permissions_params
+    params.permit(:id, permissions: [])
   end
 end

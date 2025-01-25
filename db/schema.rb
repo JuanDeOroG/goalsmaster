@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string "name", default: "", null: false
+    t.string "name", null: false
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
   create_table "roles_permissions", force: :cascade do |t|
     t.bigint "role_id", null: false
     t.bigint "permission_id", null: false
-    t.integer "state", null: false
+    t.integer "state", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permission_id"], name: "index_roles_permissions_on_permission_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_11_041307) do
     t.string "code", default: -> { "gen_random_uuid()" }, null: false
     t.string "username", default: "", null: false
     t.string "email", default: "", null: false
+    t.integer "role_id", default: 0, null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"

@@ -20,16 +20,18 @@
                     </h5>
                     <div class="d-flex justify-content-between">
                       <!-- Button to edit -->
-                      <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#modalEdit" data-role="<%= role.to_json %>">
-                        Edit
-                      </button>
-                      <!-- Button to delete -->
-                      <%= button_tag "Delete" , type: "button" , class: "btn btn-sm btn-danger" , data: {
-                        bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
+                      <%= button_tag "Edit" , type: "button" , class: "btn bg-gradient-info" , data: {
+                        bs_toggle: "modal" , bs_target: "#modalEdit" , role: role.to_json } %>
+                        <!-- Button to delete -->
+                        <%= button_tag "Delete" , type: "button" , class: "btn bg-gradient-danger" , data: {
+                          bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
 
-                        <!-- Modal to delete -->
-                        <%= render "roles/partials/confirmDeleteModal" , role: role %>
+                          <!-- Button to see permissions assigned to a role -->
+                          <%= button_tag "Permissions assigned" , type: "button" , class: "btn bg-gradient-primary" ,
+                            data: { bs_toggle: "modal" , bs_target: "#permissionsAssignedModal", rolePermissions: role.permissions.to_json, roleId: role.id} %>
+
+                            <!-- Modal to delete -->
+                            <%= render "roles/partials/confirmDeleteModal" , role: role %>
                     </div>
                   </div>
                 </div>
@@ -68,33 +70,71 @@
         <h5 class="modal-title" id="modalEditLabel">Edit Role</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="editModalBody">
         <!-- Contenido cargado dinámicamente con fetch -->
       </div>
     </div>
   </div>
 </div>
 
-<script>
+<!-- Modal to see permissions assigned-->
+<%= render "roles/partials/permissionsAssigned", permissions: @permissionList %>
 
-  function chargeEditForm() {
-    const editModal = document.getElementById("modalEdit");
 
-    editModal.addEventListener("show.bs.modal", function (event) {
-      const button = event.relatedTarget;
-      const roleData = JSON.parse(button.getAttribute("data-role"));
+<% content_for :javascript do %>
 
-      fetch(`/roles/${roleData.id}/edit`)
-        .then(response => response.text())
-        .then(html => {
-          const modalBody = editModal.querySelector(".modal-body");
-          modalBody.innerHTML = html;
-        });
+  <script>
+
+    function chargeEditForm() {
+      const editModal = document.getElementById("modalEdit");
+
+      editModal.addEventListener("show.bs.modal", function (event) {
+        const button = event.relatedTarget;
+        const roleData = JSON.parse(button.getAttribute("data-role"));
+
+        fetch(`/roles/${roleData.id}/edit`)
+          .then(response => response.text())
+          .then(html => {
+            const modalBody = editModal.querySelector("#editModalBody");
+            modalBody.innerHTML = html;
+          });
+      });
+    }
+
+    function showRolePermissions(){
+      const permissionsAssignedModal = document.getElementById("permissionsAssignedModal");
+      
+      permissionsAssignedModal.addEventListener("show.bs.modal", function (event) {
+        // obtener la información del role al que se le dió click
+        const button = event.relatedTarget
+        const rolePermissions = JSON.parse(button.getAttribute("data-rolePermissions"));
+        const roleId = JSON.parse(button.getAttribute("data-roleId"));
+
+        console.log(rolePermissions)
+        // Mirar todos los permisos mostrados en forma de checkbox
+        const permissionsBody = permissionsAssignedModal.querySelectorAll("#permissionsAssignedBody input");
+        // console.log(permissionsBody)
+        roleIdInput.value = roleId;
+        // Recorrer todos los permisos (checkboxes)
+        permissionsBody.forEach(checkbox => {
+          // se iniciará como false porque si el role no tiene ningun permiso nunca entrará en el siguiente foreach
+          checkbox.checked = false; 
+
+          // recorrer los permisos asignados al rol
+          rolePermissions.forEach(permission => {
+            if(checkbox.id == permission.id){
+              checkbox.checked = true;
+            }
+          })
+        });    
+      })
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      chargeEditForm();
+      showRolePermissions()
     });
-  }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    chargeEditForm();
-  });
+  </script>
 
-</script>
+<% end %>

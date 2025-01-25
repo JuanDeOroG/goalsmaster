@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   resources :roles, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
   resources :permissions, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  post "/updateRolePermissions", to: "roles#updateRolePermissions" # Assign and remove permissions associated with a role.
 end
