@@ -1,5 +1,5 @@
 class Goal < ApplicationRecord
-  validates :title, :code, :user_id, :created_by, :updated_by, :state, presence: true
+  validates :title, :user_id, :created_by, :updated_by, :state, presence: true
   validates :title, length: { maximum: 50 }
   validates :code, uniqueness: true
 

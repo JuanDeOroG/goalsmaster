@@ -3,48 +3,48 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-          <h6>Roles</h6>
+          <h6>Goals</h6>
           <!-- Botón para abrir el modal de creación -->
           <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreate">
-            Create Role
+            Create Goal
           </button>
         </div>
         <div class="container">
-          <% if @roles.present? %>
-            <div class="row">
-            <% @roles.each do |role| %>
+          <% if @goals.present? %>
+          <div class="row">
+            <% @goals.each do |goal| %>
               <div class="col-md-4">
                 <div class="card shadow-sm mb-4">
                   <div class="card-body">
                     <h5 class="card-title text-center">
-                      <%= role.name %>
+                      <%= goal.title %>
                     </h5>
                     <div class="d-flex justify-content-between">
                       <!-- Button to edit -->
                       <%= button_tag "Edit" , type: "button" , class: "btn bg-gradient-info" , data: {
-                        bs_toggle: "modal" , bs_target: "#modalEdit" , role: role.to_json } %>
+                        bs_toggle: "modal" , bs_target: "#modalEdit" , goal: goal.to_json } %>
                         <!-- Button to delete -->
                         <%= button_tag "Delete" , type: "button" , class: "btn bg-gradient-danger" , data: {
                           bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
 
-                          <!-- Button to see permissions assigned to a role -->
-                          <%= button_tag "Permissions assigned" , type: "button" , class: "btn bg-gradient-primary" ,
-                            data: { bs_toggle: "modal" , bs_target: "#permissionsAssignedModal", rolePermissions: role.permissions.to_json, roleId: role.id} %>
+                          <!-- Button to see tasks assigned to a Goal -->
+                          <%= button_tag "Tasks" , type: "button" , class: "btn bg-gradient-primary" ,
+                            data: { bs_toggle: "modal" , bs_target: "#permissionsAssignedModal"} %>
 
                             <!-- Modal to delete -->
-                            <%= render "roles/partials/confirmDeleteModal" , role: role %>
+                            <%= render "goals/partials/confirmDeleteModal" , goal: goal %>
                     </div>
                   </div>
                 </div>
               </div>
               <% end %>
 
-                <%= paginate @roles, class: "pagination pagination-primary" %>
+                <%= paginate @goals, class: "pagination pagination-primary" %>
 
           </div>
           <% else %>
-            <div class="alert alert-info m-3">
-              <p class="mb-0" style="color: white; text-align: center;">You have not created any roles yet.</p>
+            <div class="alert alert-info">
+              <p class="mb-0" style="color: white; text-align: center;">You have not created any goals yet.</p>
             </div>
           <% end %>
         </div>
@@ -58,11 +58,11 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalCreateLabel">Create Role</h5>
+        <h5 class="modal-title" id="modalCreateLabel">Create Goal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= render 'roles/partials/form' , role: @role %>
+        <%= render 'goals/partials/form' , goal: @goal %>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalEditLabel">Edit Role</h5>
+        <h5 class="modal-title" id="modalEditLabel">Edit Goal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="editModalBody">
@@ -82,9 +82,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal to see permissions assigned-->
-<%= render "roles/partials/permissionsAssigned", permissions: @permissionList %>
 
 
 <% content_for :javascript do %>
@@ -96,9 +93,9 @@
 
       editModal.addEventListener("show.bs.modal", function (event) {
         const button = event.relatedTarget;
-        const roleData = JSON.parse(button.getAttribute("data-role"));
+        const data = JSON.parse(button.getAttribute("data-goal"));
 
-        fetch(`/roles/${roleData.id}/edit`)
+        fetch(`/goals/${data.id}/edit`)
           .then(response => response.text())
           .then(html => {
             const modalBody = editModal.querySelector("#editModalBody");
@@ -107,38 +104,8 @@
       });
     }
 
-    function showRolePermissions(){
-      const permissionsAssignedModal = document.getElementById("permissionsAssignedModal");
-      
-      permissionsAssignedModal.addEventListener("show.bs.modal", function (event) {
-        // obtener la información del role al que se le dió click
-        const button = event.relatedTarget
-        const rolePermissions = JSON.parse(button.getAttribute("data-rolePermissions"));
-        const roleId = JSON.parse(button.getAttribute("data-roleId"));
-
-        console.log(rolePermissions)
-        // Mirar todos los permisos mostrados en forma de checkbox
-        const permissionsBody = permissionsAssignedModal.querySelectorAll("#permissionsAssignedBody input");
-        // console.log(permissionsBody)
-        roleIdInput.value = roleId;
-        // Recorrer todos los permisos (checkboxes)
-        permissionsBody.forEach(checkbox => {
-          // se iniciará como false porque si el role no tiene ningun permiso nunca entrará en el siguiente foreach
-          checkbox.checked = false; 
-
-          // recorrer los permisos asignados al rol
-          rolePermissions.forEach(permission => {
-            if(checkbox.id == permission.id){
-              checkbox.checked = true;
-            }
-          })
-        });    
-      })
-    };
-
     document.addEventListener("DOMContentLoaded", function () {
       chargeEditForm();
-      showRolePermissions()
     });
 
   </script>
