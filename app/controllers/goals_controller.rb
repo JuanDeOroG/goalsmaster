@@ -5,7 +5,7 @@ class GoalsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @goals = ListGoalsUseCase.new().call(params)
+    @goals = ListGoalsUseCase.new(current_user).call(params)
     @goal = Goal.new
   end
 

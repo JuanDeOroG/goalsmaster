@@ -5,10 +5,7 @@ class CreateGoalsUseCase
 
   def call(params)
     goal = Goal.new(params)
-    puts "PARAMSS "+params.inspect
-    goal.user_id = @current_user.id
-    goal.created_by = @current_user.id
-    goal.updated_by = @current_user.id
+    goal.setCreator(goal, @current_user)
 
     goal.save
     goal
