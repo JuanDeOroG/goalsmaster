@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_25_193051) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_29_171241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_25_193051) do
     t.index ["role_id"], name: "index_roles_permissions_on_role_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "limit_time", precision: nil
+    t.integer "goal_id", null: false
+    t.integer "created_by", null: false
+    t.integer "updated_by", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "state", default: 1, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "code", default: -> { "gen_random_uuid()" }, null: false
     t.string "username", default: "", null: false
@@ -104,4 +116,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_25_193051) do
   add_foreign_key "parameter_values", "parameters", on_delete: :cascade
   add_foreign_key "roles_permissions", "permissions"
   add_foreign_key "roles_permissions", "roles"
+  add_foreign_key "tasks", "goals"
+  add_foreign_key "tasks", "users", column: "created_by"
+  add_foreign_key "tasks", "users", column: "updated_by"
 end

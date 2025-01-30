@@ -35,9 +35,7 @@
                           bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
 
                           <!-- Button to see tasks assigned to a Goal -->
-                          <%= button_tag "Tasks" , type: "button" , class: "btn bg-gradient-primary" ,
-                            data: { bs_toggle: "modal" , bs_target: "#permissionsAssignedModal"} %>
-
+                      <%= button_to "Tasks" , tasks_path, class: "btn bg-gradient-primary" %>
 
 
                             <!-- Modal to delete -->

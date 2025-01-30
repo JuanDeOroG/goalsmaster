@@ -1,0 +1,44 @@
+<% content_for "head" do %>
+<style>
+    .card {
+    border-radius: 10px; /* Bordes redondeados */
+  }
+</style>
+<% end %>
+
+<%= form_with(model: task, url: task.new_record? ? tasks_path : task_path(task), method: task.new_record? ? :post : :patch, local: true) do |f| %>
+<div>
+  <%= f.label :name, style: "display: block" %>
+  <%= f.text_field :name %>
+</div>
+
+<div>
+  <%= f.label :descriptcion, style: "display: block" %>
+  <%= f.text_area :descriptcion %>
+</div>
+
+<div>
+  <%= f.label :limit_time, style: "display: block" %>
+  <%= f.datetime_field :limit_time %>
+</div>
+
+<div>
+  <%= f.label :goal_id, style: "display: block" %>
+  <%= f.text_field :goal_id %>
+</div>
+
+<div>
+  <%= f.label :user_id, style: "display: block" %>
+  <%= f.text_field :user_id %>
+</div>
+
+<div>
+  <%= f.label :state, style: "display: block" %>
+  <%= f.number_field :state %>
+</div>
+
+
+  <div class="text-center">
+    <%= f.submit task.new_record? ? "Create" : "Update", class: "btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0" %>
+  </div>
+<% end %>

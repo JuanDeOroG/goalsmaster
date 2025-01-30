@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   post "/updateRolePermissions", to: "roles#updateRolePermissions" # Assign and remove permissions associated with a role.
 
   resources :goals, only: [ :index, :create, :edit, :update, :destroy ]
+  resources :tasks, only: [ :index, :create, :edit, :update, :destroy ]
 end
