@@ -13,8 +13,9 @@
     <%= f.label :description, "Goal description (it's optional)", class: "form-label" %>
     <%= f.text_area :description, class: "form-control", placeholder: "Write the description here", rows: 5 %>
 
-    <%= f.label :limit_time, "Limit date (it's optional)", class: "form-label" %>
-    <%= f.date_field :limit_time, class: "form-control", min: Date.today %>
+    <%= f.label :limit_time, "Limit date and time (it's optional)", class: "form-label" %>
+    <%= f.datetime_local_field :limit_time, class: "form-control", min: Time.current.strftime("%Y-%m-%dT%H:%M") %>
+
 
   <div class="text-center">
     <%= f.submit goal.new_record? ? "Create" : "Update", class: "btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0" %>

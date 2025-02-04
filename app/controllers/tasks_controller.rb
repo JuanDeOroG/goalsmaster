@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @goal = Goal.find(params[:goalId])
+    @goal = Goal.find_by(code: params[:goalCode])
     @tasks = ListTasksUseCase.new().call(params, true)
     @task = Task.new
   end

@@ -15,7 +15,7 @@
             <% @goals.each do |goal| %>
               <div class="col-md-4">
                 <div class="card shadow-sm mb-4">
-                  <div class="card-body">¨
+                  <div class="card-body">
                     
                     <% if goal.limit_time.present? %>
                       <h6 class="card-title" style="text-align: right;"><span class="bg-gradient-info" style="color: white; padding: 2px; border-radius: 5px;">Limit Date: <%= goal.limit_time.strftime("%d/%m/%Y") %></span></h6>
@@ -27,15 +27,15 @@
                       <%= goal.title %>
                     </h5>
                     <div class="d-flex justify-content-between">
-                      <!-- Button to edit -->
+                      <!-- Button to edit goal-->
                       <%= button_tag "Edit" , type: "button" , class: "btn bg-gradient-info" , data: {
-                        bs_toggle: "modal" , bs_target: "#modalEdit" , goal: goal.to_json } %>
+                        bs_toggle: "modal" , bs_target: "#modalEditGoal" , goal: goal.to_json } %>
                         <!-- Button to delete -->
                         <%= button_tag "Delete" , type: "button" , class: "btn bg-gradient-danger" , data: {
                           bs_toggle: "modal" , bs_target: "#confirmDeleteModal" } %>
 
                           <!-- Button to see tasks assigned to a Goal -->
-                      <%= button_to "Tasks" , tasks_path, class: "btn bg-gradient-primary" %>
+                          <%= link_to "Tasks", tasks_path(goalCode: goal.code), class: "btn btn-primary" %>
 
 
                             <!-- Modal to delete -->
@@ -85,46 +85,4 @@
   </div>
 </div>
 
-<!-- Modal to edit -->
-<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalEditLabel">Edit Goal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="editModalBody">
-        <!-- Contenido cargado dinámicamente con fetch -->
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<% content_for :javascript do %>
-
-  <script>
-
-    function chargeEditForm() {
-      const editModal = document.getElementById("modalEdit");
-
-      editModal.addEventListener("show.bs.modal", function (event) {
-        const button = event.relatedTarget;
-        const data = JSON.parse(button.getAttribute("data-goal"));
-
-        fetch(`/goals/${data.id}/edit`)
-          .then(response => response.text())
-          .then(html => {
-            const modalBody = editModal.querySelector("#editModalBody");
-            modalBody.innerHTML = html;
-          });
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      chargeEditForm();
-    });
-
-  </script>
-
-<% end %>
+<%= render "goals/partials/editGoalModal" %>

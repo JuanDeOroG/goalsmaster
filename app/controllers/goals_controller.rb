@@ -1,5 +1,6 @@
 require_dependency "Goals/CreateGoalsUseCase"
 require_dependency "Goals/ListGoalsUseCase"
+require_dependency "Tasks/DeleteAllTasksForGoalUseCase"
 
 class GoalsController < ApplicationController
   before_action :authenticate_user!
@@ -28,7 +29,9 @@ class GoalsController < ApplicationController
 
   def update
     goal = Goal.find(params[:id])
+    goal.updated_by = current_user.id
     if goal.update(goal_params)
+      DeleteAllTasksForGoalUseCase.new.call(params[:id]) # Change the state of all tasks for the goal to 2 (deleted)
       redirect_to goals_path, notice: "Goal was updated successfully"
     else
       error_messages = goal.errors.full_messages.join(", ")

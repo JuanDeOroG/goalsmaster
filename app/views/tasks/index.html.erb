@@ -7,25 +7,62 @@
             <%= @goal.title %> <span style="border-radius: 4px; color: white; padding: 2px;"
                 class="bg-gradient-success">100%</span>
           </h6>
+                      <!-- Button to edit goal-->
+          <%= button_tag "Edit Goal" , type: "button" , class: "btn bg-gradient-info" , data: {
+            bs_toggle: "modal" , bs_target: "#modalEditGoal" , goal: @goal.to_json } %>          
           <!-- Botón para abrir el modal de creación -->
           <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreate">
             Create Task
           </button>
         </div>
         <div class="container">
-
-          <% if @goal.limit_time.present? %>
-            <h6 class="card-title" style="text-align: left;"><span class="bg-gradient-info" style="color: white; padding: 2px; border-radius: 5px;">
-              Limit Date: <%= @goal.limit_time.strftime("%d/%m/%Y") %></span>
-            </h6>
-          <% else %>
-            <h6 class="card-title" style="text-align: right;"><span
-                style="color: white; padding: 2px; border-radius: 5px; background-color: gray;">No limit Date</span>
-            </h6>
-          <% end %>
-
-          <p><strong>Description: </strong><%= @goal.description %></p>
-
+          <div class="row">            
+            <div class="col-md-8 d-flex justify-content-start gap-3">
+              <% if @goal.limit_time.present? %>
+                <h6>Limit Date: 
+                  <span class="bg-gradient-info text-white px-2 py-1 rounded">
+                    <%= @goal.limit_time.strftime("%d/%m/%Y") %>
+                  </span>
+                </h6>
+              <% else %>
+                <h6>No Limit Date
+                  <span class="bg-gradient-dark text-white px-2 py-1 rounded">
+                    
+                  </span>
+                </h6>
+              <% end %>
+          
+              <h6>Created At:
+                <span class="bg-gradient-primary text-white px-2 py-1 rounded">
+                   <%= @goal.created_at.strftime("%d/%m/%Y") %>
+                </span>
+              </h6>
+          
+              <h6>Updated At:
+                <span class="bg-gradient-secondary text-white px-2 py-1 rounded">
+                   <%= @goal.updated_at.strftime("%d/%m/%Y") %>
+                </span>
+              </h6>
+            </div>
+            <div class="col-md-8 d-flex justify-content-start gap-3">
+              <h6>Goal State: 
+                <span class="bg-gradient-info text-white px-2 py-1 rounded">
+                  <%= @goal.state %>
+                </span>
+              </h6>
+              <h6>Total tasks: 
+                <span class="bg-gradient-secondary text-white px-2 py-1 rounded">
+                  <%= @tasks.count %>
+                </span>
+              </h6>
+            </div>
+          </div>
+          
+          <h6>Description:
+            <span style="font-weight: 400">
+               <%= @goal.description %>
+            </span>
+          </h6>
           <% if @tasks.present? %>
           <div class="row">
             <% @tasks.each do |task| %>
@@ -108,46 +145,5 @@
   </div>
 </div>
 
-<!-- Modal to edit -->
-<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalEditLabel">Edit task</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="editModalBody">
-        <!-- Contenido cargado dinámicamente con fetch -->
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<% content_for :javascript do %>
-
-  <script>
-
-    function chargeEditForm() {
-      const editModal = document.getElementById("modalEdit");
-
-      editModal.addEventListener("show.bs.modal", function (event) {
-        const button = event.relatedTarget;
-        const data = JSON.parse(button.getAttribute("data-task"));
-
-        fetch(`/tasks/${data.id}/edit`)
-          .then(response => response.text())
-          .then(html => {
-            const modalBody = editModal.querySelector("#editModalBody");
-            modalBody.innerHTML = html;
-          });
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      chargeEditForm();
-    });
-
-  </script>
-
-  <% end %>
+<%= render "goals/partials/editGoalModal" %>
+<%= render "tasks/partials/editTaskModal" %>
