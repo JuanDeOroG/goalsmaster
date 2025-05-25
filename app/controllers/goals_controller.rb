@@ -4,10 +4,16 @@ require_dependency "Tasks/DeleteAllTasksForGoalUseCase"
 
 class GoalsController < ApplicationController
   before_action :authenticate_user!
+  skip_forgery_protection only: :index
 
   def index
     @goals = ListGoalsUseCase.new(current_user).call(params)
     @goal = Goal.new
+
+    respond_to do |format|
+      format.html { render :index } # Renderiza la vista HTML normalmente
+      format.js { render partial: "goals/partials/goalList", locals: { goals: @goals } } # Devuelve el partial
+    end
   end
 
   def create

@@ -9,7 +9,7 @@ class CreateGoals < ActiveRecord::Migration[7.2]
       t.integer :created_by, null: false
       t.integer :updated_by, null: false
       t.timestamps
-      t.integer :state, null: false, default: 1
+      t.integer :state, null: false, default: 1, comment: "1: In Progress, 2: Deleted, 3: Completed"
     end
 
     add_foreign_key :goals, :users, column: :user_id

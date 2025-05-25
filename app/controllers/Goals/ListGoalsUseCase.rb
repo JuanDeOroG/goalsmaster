@@ -10,9 +10,8 @@ class ListGoalsUseCase
 
   def apply_filters_in_list(params, pagination)
     goals = Goal.all
-    goals = goals.filter_by_title(params[:title])
-    goals = goals.filter_by_creator(@curret_user)
-    goals = goals.order("limit_time ASC")
+    goals = goals.filter_by_state(params[:state]).filter_by_title(params[:title]).filter_by_creator(@current_user).order("limit_time ASC")
+    
     pagination ? goals.page(params[:page]).per(10) : goals
   end
 end
