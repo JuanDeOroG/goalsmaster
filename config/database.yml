@@ -59,6 +59,8 @@ development:
 test:
   <<: *default
   database: goalsmaster_test
+  username: <%= ENV["GOALSMASTER_DATABASE_USERNAME"] %>
+  password: <%= ENV["GOALSMASTER_DATABASE_PASSWORD"] %> 
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,5 +85,5 @@ test:
 production:
   <<: *default
   database: goalsmaster_production
-  username: goalsmaster
+  username: <%= ENV["GOALSMASTER_DATABASE_USERNAME"] %>
   password: <%= ENV["GOALSMASTER_DATABASE_PASSWORD"] %>
