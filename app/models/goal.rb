@@ -19,6 +19,11 @@ class Goal < ApplicationRecord
     goal
   end
 
+  # Next function returns the progress of the goal based on the tasks associated with it.
   def getGoalProgress
+    total = Task.where(goal_id: self.id).where.not(state: 2).count
+    return 0 if total == 0
+    completed = Task.where(goal_id: self.id, state: 3).count
+    ((completed.to_f / total) * 100).round
   end
 end
